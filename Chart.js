@@ -975,7 +975,6 @@
                                 xPositions.push(element.x);
                                 yPositions.push(element.y);
 
-
                                 //Include any colour information about the element
                                 tooltipLabels.push(helpers.template(this.options.multiTooltipTemplate, element));
                                 tooltipColors.push({
@@ -998,6 +997,7 @@
                         }).call(this, dataIndex);
 
                     new Chart.MultiTooltip({
+                        i: Elements[0].i,
                         x: medianPosition.x,
                         y: medianPosition.y,
                         xPadding: this.options.tooltipXPadding,
@@ -1026,6 +1026,7 @@
                     each(ChartElements, function(Element) {
                         var tooltipPosition = Element.tooltipPosition();
                         new Chart.Tooltip({
+                            i: Element.i,
                             x: Math.round(tooltipPosition.x),
                             y: Math.round(tooltipPosition.y),
                             xPadding: this.options.tooltipXPadding,
@@ -2613,10 +2614,12 @@
                         point.i = i;
                         point.restore(['fillColor', 'strokeColor']);
                     });
+
                     helpers.each(activePoints, function(activePoint){
                         activePoint.fillColor = activePoint.highlightFill;
                         activePoint.strokeColor = activePoint.highlightStroke;
                     });
+
                     this.showTooltip(activePoints);
                 });
             }
@@ -2639,6 +2642,7 @@
                 helpers.each(dataset.data,function(dataPoint,index){
                     //Add a new point for each piece of data, passing any required data to draw.
                     datasetObject.points.push(new this.PointClass({
+                        i: index,
                         value : dataPoint,
                         label : data.labels[index],
                         datasetLabel: dataset.label,
@@ -2685,7 +2689,8 @@
             var pointsArray = [],
                 eventPosition = helpers.getRelativePosition(e);
             helpers.each(this.datasets,function(dataset){
-                helpers.each(dataset.points,function(point){
+                helpers.each(dataset.points,function(point, i){
+                    point.i = i;
                     if (point.inRange(eventPosition.x,eventPosition.y)) pointsArray.push(point);
                 });
             },this);
