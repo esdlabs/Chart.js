@@ -1,3 +1,8 @@
+// ==ClosureCompiler==
+// @output_file_name default.js
+// @compilation_level SIMPLE_OPTIMIZATIONS
+// ==/ClosureCompiler==
+
 /*!
  * Chart.js
  * http://chartjs.org/
@@ -938,6 +943,7 @@
             if(this.options.customTooltips){
                 this.options.customTooltips(false);
             }
+
             if (ChartElements.length > 0){
                 // If we have multiple datasets, show a MultiTooltip for all of the data points at that index
                 if (this.datasets && this.datasets.length > 1) {
@@ -997,7 +1003,7 @@
                         }).call(this, dataIndex);
 
                     new Chart.MultiTooltip({
-                        i: Elements[0].i,
+                        i: ChartElements[0].i,
                         x: medianPosition.x,
                         y: medianPosition.y,
                         xPadding: this.options.tooltipXPadding,
