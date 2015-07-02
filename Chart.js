@@ -2609,7 +2609,8 @@
             if (this.options.showTooltips){
                 helpers.bindEvents(this, this.options.tooltipEvents, function(evt){
                     var activePoints = (evt.type !== 'mouseout') ? this.getPointsAtEvent(evt) : [];
-                    this.eachPoints(function(point){
+                    this.eachPoints(function(point, i){
+                        point.i = i;
                         point.restore(['fillColor', 'strokeColor']);
                     });
                     helpers.each(activePoints, function(activePoint){
